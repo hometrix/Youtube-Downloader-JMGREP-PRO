@@ -6,12 +6,12 @@ A powerful, native, and open-source YouTube downloader built exclusively for App
 
 <div align="center">  
 <!-- Badges -->  
-<a href="https://github.com/jadhavsharad/Youtube-Downloader/releases"/><img src="https://img.shields.io/github/v/release/jadhavsharad/Youtube-Downloader?style=for-the-badge\&logo=github" alt="Latest Release"/></a>  
-<a href="https://github.com/jadhavsharad/Youtube-Downloader/releases"><img src="https://img.shields.io/github/downloads/jadhavsharad/Youtube-Downloader/total?style=for-the-badge\&logo=icloud\&color=success" alt="Total Downloads"></a>
-<img src="https://img.shields.io/badge/macOS-13.0%2B-blue?style=for-the-badge\&logo=apple" alt="macOS Version"\>  
-<img src="https://img.shields.io/badge/Apple\_Silicon-Optimized-lightgrey?style=for-the-badge\&logo=apple" alt="Apple Silicon"\>  
-<a href="https://github.com/jadhavsharad/Youtube-Downloader/issues"\><img src="https://img.shields.io/github/issues/jadhavsharad/Youtube-Downloader?style=for-the-badge\&logo=github" alt="Open Issues"></a>
-<a href="https://github.com/jadhavsharad/Youtube-Downloader/pulls"\><img src="https://img.shields.io/github/issues-pr/jadhavsharad/Youtube-Downloader?style=for-the-badge\&logo=github" alt="Pull Requests"></a\>
+<a href="https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/releases"/><img src="https://img.shields.io/github/v/release/hometrix/Youtube-Downloader-JMGREP-PRO?style=for-the-badge&logo=github" alt="Latest Release"/></a>  
+<a href="https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/releases"><img src="https://img.shields.io/github/downloads/hometrix/Youtube-Downloader-JMGREP-PRO/total?style=for-the-badge&logo=icloud&color=success" alt="Total Downloads"></a>
+<img src="https://img.shields.io/badge/macOS-11.0%2B-blue?style=for-the-badge&logo=apple" alt="macOS Version">  
+<img src="https://img.shields.io/badge/Apple_Silicon-Optimized-brightgreen?style=for-the-badge&logo=apple" alt="Apple Silicon">  
+<a href="https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/issues"><img src="https://img.shields.io/github/issues/hometrix/Youtube-Downloader-JMGREP-PRO?style=for-the-badge&logo=github" alt="Open Issues"></a>
+<a href="https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/pulls"><img src="https://img.shields.io/github/issues-pr/hometrix/Youtube-Downloader-JMGREP-PRO?style=for-the-badge&logo=github" alt="Pull Requests"></a>
 </div>
 
 ## **✨ Key Features**
@@ -86,14 +86,14 @@ We welcome contributions from developers of all skill levels\! Your ideas, bug f
 
 ### **How You Can Help**
 
-* **Report a Bug**: Found an issue? [Open an issue](https://github.com/jadhavsharad/Youtube-Downloader/issues) with detailed steps to reproduce it.  
-* **Suggest a Feature**: Have a great idea? Let's hear it\!  
+* **Report a Bug**: Found an issue? [Open an issue](https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/issues) with detailed steps to reproduce it.  
+* **Suggest a Feature**: Have a great idea? Let's hear it!  
 * **Submit a Pull Request**: Want to fix something yourself? Fork the repo and submit a PR. Check out our "Good First Issue" tags for easy starting points.
 
 ## **👥 Credits & Maintenance**
 
 *   **Original Creator:** [jadhavsharad](https://github.com/jadhavsharad) - Developed the initial native macOS implementation.
-*   **Enhanced & Localized Version:** [Joan Ml. Gregorio Pérez](https://github.com/joanmgp) - Implemented internationalization (Spanish support), UI improvements, and dependency management refactoring.
+*   **Enhanced & Localized Version:** [Joan Ml. Gregorio Pérez](https://github.com/hometrix) - Implemented internationalization (Spanish support), UI improvements, and dependency management refactoring.
 
 ### **Development Setup**
 
