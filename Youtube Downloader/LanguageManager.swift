@@ -1,0 +1,106 @@
+import Foundation
+import SwiftUI
+
+enum AppLanguage: String, CaseIterable, Identifiable {
+    case english = "English"
+    case spanish = "Español"
+    var id: String { self.rawValue }
+}
+
+struct Localized {
+    static func string(_ key: String, lang: AppLanguage) -> String {
+        let translations: [AppLanguage: [String: String]] = [
+            .english: [
+                "app_title": "Youtube Downloader",
+                "app_subtitle": "A simple, minimal and high quality youtube downloader.",
+                "view_github": "View Github",
+                "choose_mode": "Choose Mode",
+                "single_url": "Single URL",
+                "batch_urls": "Batch URLs",
+                "enter_url": "Enter Youtube URL",
+                "enter_urls": "Enter Youtube URLs (one per line)",
+                "single_mode": "Single URL Mode",
+                "batch_mode": "Batch URL Mode",
+                "download_location": "Download Location",
+                "no_folder": "No folder selected.",
+                "choose": "Choose",
+                "open": "Open",
+                "download_options": "Download Options",
+                "format_options": "Format Options",
+                "container": "Container",
+                "quality": "Quality",
+                "advance_options": "Advance Options",
+                "filename_template": "Filename Template",
+                "subtitle_langs": "Subtitle Languages (e.g. en,es)",
+                "speed_limit": "Speed Limit (e.g. 1M)",
+                "throttle_rate": "Throttle Rate (e.g. 100K)",
+                "more_options": "More Options",
+                "embed_subtitles": "Embed Subtitles",
+                "embed_metadata": "Embed Metadata",
+                "skip_existing": "Skip Existing",
+                "auto_open": "Auto Open Folder",
+                "download_progress": "Download Progress",
+                "start_download": "Start Downloading",
+                "stop": "Stop",
+                "logs": "Logs",
+                "item_of": "Item %d of %d",
+                "unlimited": "Unlimited",
+                "none": "None",
+                "best_auto": "Best Quality (auto)",
+                "best_video": "Best Video",
+                "best_audio": "Best Audio",
+                "credit_text": "Enhanced by Joan Ml. Gregorio Pérez",
+                "disclaimer_title": "Disclaimer & Terms of Use",
+                "disclaimer_body": "This application is intended for educational purposes and personal backup only. By using this app, you agree that you are solely responsible for the content you download and that you will respect the intellectual property rights and terms of service of the original platforms. We do not encourage or facilitate copyright infringement.",
+                "disclaimer_accept": "I Understand and Accept",
+                "donate_button": "Donate to the Project"
+            ],
+            .spanish: [
+                "app_title": "Descargador de Youtube",
+                "app_subtitle": "Un descargador de Youtube simple, minimalista y de alta calidad.",
+                "view_github": "Ver en Github",
+                "choose_mode": "Elegir Modo",
+                "single_url": "URL Única",
+                "batch_urls": "URLs en Lote",
+                "enter_url": "Ingresa la URL de Youtube",
+                "enter_urls": "Ingresa las URLs de Youtube (una por línea)",
+                "single_mode": "Modo URL Única",
+                "batch_mode": "Modo Lote de URLs",
+                "download_location": "Ubicación de Descarga",
+                "no_folder": "Carpeta no seleccionada.",
+                "choose": "Elegir",
+                "open": "Abrir",
+                "download_options": "Opciones de Descarga",
+                "format_options": "Opciones de Formato",
+                "container": "Contenedor",
+                "quality": "Calidad",
+                "advance_options": "Opciones Avanzadas",
+                "filename_template": "Plantilla de Nombre",
+                "subtitle_langs": "Idiomas de Subtítulos (ej. en,es)",
+                "speed_limit": "Límite de Velocidad (ej. 1M)",
+                "throttle_rate": "Tasa de Estrangulamiento (ej. 100K)",
+                "more_options": "Más Opciones",
+                "embed_subtitles": "Incrustar Subtítulos",
+                "embed_metadata": "Incrustar Metadatos",
+                "skip_existing": "Omitir Existentes",
+                "auto_open": "Abrir Carpeta Auto.",
+                "download_progress": "Progreso de Descarga",
+                "start_download": "Iniciar Descarga",
+                "stop": "Detener",
+                "logs": "Registros",
+                "item_of": "Elemento %d de %d",
+                "unlimited": "Ilimitado",
+                "none": "Ninguno",
+                "best_auto": "Mejor Calidad (auto)",
+                "best_video": "Mejor Video",
+                "best_audio": "Mejor Audio",
+                "credit_text": "Mejorado por Joan Ml. Gregorio Pérez",
+                "disclaimer_title": "Aviso Legal y Términos de Uso",
+                "disclaimer_body": "Esta aplicación está destinada únicamente a fines educativos y de respaldo personal. Al usar esta aplicación, aceptas que eres el único responsable del contenido que descargas y que respetarás los derechos de propiedad intelectual y los términos de servicio de las plataformas originales. No fomentamos ni facilitamos la infracción de derechos de autor.",
+                "disclaimer_accept": "Entiendo y Acepto",
+                "donate_button": "Donar al Proyecto"
+            ]
+        ]
+        return translations[lang]?[key] ?? key
+    }
+}

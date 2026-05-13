@@ -90,6 +90,11 @@ We welcome contributions from developers of all skill levels\! Your ideas, bug f
 * **Suggest a Feature**: Have a great idea? Let's hear it\!  
 * **Submit a Pull Request**: Want to fix something yourself? Fork the repo and submit a PR. Check out our "Good First Issue" tags for easy starting points.
 
+## **👥 Credits & Maintenance**
+
+*   **Original Creator:** [jadhavsharad](https://github.com/jadhavsharad) - Developed the initial native macOS implementation.
+*   **Enhanced & Localized Version:** [Joan Ml. Gregorio Pérez](https://github.com/joanmgp) - Implemented internationalization (Spanish support), UI improvements, and dependency management refactoring.
+
 ### **Development Setup**
 
 ```bash

@@ -1,0 +1,8 @@
+.DS_Store
+build/
+DerivedData/
+*.dmg
+dmg_folder/
+DMG_Folder/
+.xcworkspace/
+xcuserdata/
