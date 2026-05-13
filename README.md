@@ -4,6 +4,12 @@
 
 A powerful, native, and open-source YouTube downloader built exclusively for Apple Silicon Macs. Experience seamless, fast, and high-quality video downloads with a clean, intuitive interface.
 
+---
+
+[🇪🇸 Versión en Español](README.es.md)
+
+---
+
 <div align="center">  
 <!-- Badges -->  
 <a href="https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/releases"/><img src="https://img.shields.io/github/v/release/hometrix/Youtube-Downloader-JMGREP-PRO?style=for-the-badge&logo=github" alt="Latest Release"/></a>  
