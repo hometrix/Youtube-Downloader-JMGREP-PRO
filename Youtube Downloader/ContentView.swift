@@ -431,6 +431,13 @@ struct ContentView: View {
         }
         .scrollIndicators(.automatic) // Hides the main scroll bar
         .frame(minWidth: 500, maxWidth: .infinity, minHeight: 550, maxHeight: .infinity)
+        .alert(isPresented: $viewModel.showingErrorAlert) {
+            Alert(
+                title: Text(Localized.string("error", lang: viewModel.language)),
+                message: Text(viewModel.errorMessage ?? ""),
+                dismissButton: .default(Text(Localized.string("ok", lang: viewModel.language)))
+            )
+        }
         .sheet(isPresented: Binding(get: { !viewModel.disclaimerAccepted }, set: { _ in })) {
             VStack(spacing: 24) {
                 Image(systemName: "exclamationmark.shield.fill")

@@ -53,7 +53,13 @@ struct Localized {
                 "disclaimer_title": "Disclaimer & Terms of Use",
                 "disclaimer_body": "This application is intended for educational purposes and personal backup only. By using this app, you agree that you are solely responsible for the content you download and that you will respect the intellectual property rights and terms of service of the original platforms. We do not encourage or facilitate copyright infringement.",
                 "disclaimer_accept": "I Understand and Accept",
-                "donate_button": "Donate to the Project"
+                "donate_button": "Donate to the Project",
+                "choose_folder_err": "Please select a download folder first.",
+                "deps_not_ready": "Dependencies are not ready yet. Please wait.",
+                "no_urls_err": "Please enter at least one valid URL.",
+                "enter_url_err": "Please enter a valid YouTube URL.",
+                "error": "Error",
+                "ok": "OK"
             ],
             .spanish: [
                 "app_title": "Descargador de Youtube",
@@ -98,7 +104,13 @@ struct Localized {
                 "disclaimer_title": "Aviso Legal y Términos de Uso",
                 "disclaimer_body": "Esta aplicación está destinada únicamente a fines educativos y de respaldo personal. Al usar esta aplicación, aceptas que eres el único responsable del contenido que descargas y que respetarás los derechos de propiedad intelectual y los términos de servicio de las plataformas originales. No fomentamos ni facilitamos la infracción de derechos de autor.",
                 "disclaimer_accept": "Entiendo y Acepto",
-                "donate_button": "Donar al Proyecto"
+                "donate_button": "Donar al Proyecto",
+                "choose_folder_err": "Por favor selecciona una carpeta de descarga primero.",
+                "deps_not_ready": "Las dependencias aún no están listas. Por favor espera.",
+                "no_urls_err": "Por favor ingresa al menos una URL válida.",
+                "enter_url_err": "Por favor ingresa una URL válida de YouTube.",
+                "error": "Error",
+                "ok": "Aceptar"
             ]
         ]
         return translations[lang]?[key] ?? key
