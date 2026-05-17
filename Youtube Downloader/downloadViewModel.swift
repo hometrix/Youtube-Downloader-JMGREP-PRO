@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UserNotifications
 import AppKit
 
 // MARK: - Enums for Download Options
@@ -98,6 +99,12 @@ class DownloadViewModel: ObservableObject {
         Task {
             await locateOrDownloadDependencies()
         }
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
+            if granted {
+                print("Notification permission granted.")
+            }
+        }
     }
     
     // MARK: - Dependency Management
@@ -169,6 +176,41 @@ class DownloadViewModel: ObservableObject {
         setupStatusMessage = ""
     }
     
+    func updateEngine() {
+        guard !isSettingUp && !isRunning else { return }
+        isSettingUp = true
+        setupStatusMessage = Localized.string("updating", lang: language)
+        addLog(setupStatusMessage)
+        
+        Task {
+            do {
+                let dir = try DependencyManager.shared.getAppSupportDirectory()
+                let ytDlpDest = dir.appendingPathComponent("yt-dlp")
+                
+                // Remove existing if any
+                if FileManager.default.fileExists(atPath: ytDlpDest.path) {
+                    try FileManager.default.removeItem(at: ytDlpDest)
+                }
+                
+                let url = URL(string: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos")!
+                try await DependencyManager.shared.downloadFile(from: url, to: ytDlpDest)
+                try DependencyManager.shared.makeExecutable(at: ytDlpDest.path)
+                
+                DispatchQueue.main.async {
+                    self.addLog(Localized.string("update_success", lang: self.language))
+                    self.isSettingUp = false
+                    self.setupStatusMessage = ""
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.showError(String(format: Localized.string("setup_failed", lang: self.language), error.localizedDescription))
+                    self.isSettingUp = false
+                    self.setupStatusMessage = ""
+                }
+            }
+        }
+    }
+    
     // MARK: - User Actions
     
     func selectDownloadDirectory() {
@@ -221,6 +263,7 @@ class DownloadViewModel: ObservableObject {
             
             if isRunning {
                 addLog(Localized.string("all_complete", lang: language))
+                self.sendNotification(title: Localized.string("app_title", lang: language), body: Localized.string("all_complete", lang: language))
                 if autoOpenFolder { openDownloadDirectory() }
             }
             isRunning = false
@@ -234,6 +277,16 @@ class DownloadViewModel: ObservableObject {
         activeProcess?.terminate()
         activeProcess = nil
         resetProgress()
+    }
+    
+    private func sendNotification(title: String, body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request)
     }
     
     // MARK: - Core Download Logic

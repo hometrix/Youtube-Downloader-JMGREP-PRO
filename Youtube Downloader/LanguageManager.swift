@@ -59,7 +59,11 @@ struct Localized {
                 "no_urls_err": "Please enter at least one valid URL.",
                 "enter_url_err": "Please enter a valid YouTube URL.",
                 "error": "Error",
-                "ok": "OK"
+                "ok": "OK",
+                "about_legal": "About / Legal",
+                "update_engine": "Update Engine",
+                "updating": "Updating yt-dlp...",
+                "update_success": "Engine updated successfully."
             ],
             .spanish: [
                 "app_title": "Descargador de Youtube",
@@ -110,7 +114,11 @@ struct Localized {
                 "no_urls_err": "Por favor ingresa al menos una URL válida.",
                 "enter_url_err": "Por favor ingresa una URL válida de YouTube.",
                 "error": "Error",
-                "ok": "Aceptar"
+                "ok": "Aceptar",
+                "about_legal": "Acerca de / Legal",
+                "update_engine": "Actualizar Motor",
+                "updating": "Actualizando yt-dlp...",
+                "update_success": "Motor actualizado con éxito."
             ]
         ]
         return translations[lang]?[key] ?? key

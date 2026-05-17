@@ -5,6 +5,7 @@ import AppKit
 // It handles the title and subtitle of the app.
 struct AppHeaderView: View {
     @ObservedObject var viewModel: DownloadViewModel
+    @Binding var showDisclaimer: Bool
     
     var body: some View {
         HStack(alignment: .top) {
@@ -33,19 +34,35 @@ struct AppHeaderView: View {
                 .labelsHidden()
                 .frame(width: 100)
                 
-                Button(action: {
-                    if let url = URL(string: "https://github.com/jadhavsharad/Youtube-Downloader") {
-                        NSWorkspace.shared.open(url)
+                HStack(spacing: 12) {
+                    Button(action: {
+                        showDisclaimer = true
+                    }) {
+                        Image(systemName: "info.circle.fill")
+                        Text(Localized.string("about_legal", lang: viewModel.language))
                     }
-                }){
-                    Text(Localized.string("view_github", lang: viewModel.language))
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 12)
-                        .background(Color.accentColor)
-                        .foregroundStyle(.white)
-                        .cornerRadius(100)
-                        .font(.caption)
-                }.buttonStyle(.plain)
+                    .buttonStyle(.plain)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 12)
+                    .background(Color.secondary.opacity(0.2))
+                    .cornerRadius(100)
+                    .font(.caption)
+                    
+                    Button(action: {
+                        if let url = URL(string: "https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }){
+                        Text(Localized.string("view_github", lang: viewModel.language))
+                            .padding(.vertical, 6)
+                            .padding(.horizontal, 12)
+                            .background(Color.accentColor)
+                            .foregroundStyle(.white)
+                            .cornerRadius(100)
+                            .font(.caption)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
         }
     }
@@ -170,13 +187,14 @@ struct DownloadLocationView: View {
 // Main content view, now using the reusable components.
 struct ContentView: View {
     @StateObject private var viewModel = DownloadViewModel()
+    @State private var showAboutDisclaimer = false
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
                 // Header of the app
-                AppHeaderView(viewModel: viewModel)
+                AppHeaderView(viewModel: viewModel, showDisclaimer: $showAboutDisclaimer)
                 
                 // Mode selection for single vs. batch URL
                 ModeSelectionView(viewModel: viewModel)
@@ -364,21 +382,38 @@ struct ContentView: View {
                         .background(Color.accentColor.opacity(0.05))
                         .cornerRadius(12)
                     } else {
-                        Button(action: viewModel.startDownload) {
-                            HStack {
-                                Image(systemName: "arrow.down.circle.fill")
-                                Text(Localized.string("start_download", lang: viewModel.language))
+                        VStack(spacing: 8) {
+                            Button(action: viewModel.startDownload) {
+                                HStack {
+                                    Image(systemName: "arrow.down.circle.fill")
+                                    Text(Localized.string("start_download", lang: viewModel.language))
+                                }
+                                .font(.headline)
+                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity)
+                                .foregroundStyle(.white)
+                                .background(viewModel.dependenciesReady ? Color.accentColor : Color.gray)
+                                .cornerRadius(12)
+                                .shadow(color: Color.accentColor.opacity(0.3), radius: 10, x: 0, y: 5)
                             }
-                            .font(.headline)
-                            .padding(.vertical, 12)
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .background(viewModel.dependenciesReady ? Color.accentColor : Color.gray)
-                            .cornerRadius(12)
-                            .shadow(color: Color.accentColor.opacity(0.3), radius: 10, x: 0, y: 5)
+                            .buttonStyle(.plain)
+                            .disabled(!viewModel.dependenciesReady)
+                            
+                            Button(action: viewModel.updateEngine) {
+                                HStack {
+                                    Image(systemName: "arrow.triangle.2.circlepath")
+                                    Text(Localized.string("update_engine", lang: viewModel.language))
+                                }
+                                .font(.subheadline)
+                                .padding(.vertical, 8)
+                                .frame(maxWidth: .infinity)
+                                .foregroundStyle(Color.accentColor)
+                                .background(Color.accentColor.opacity(0.1))
+                                .cornerRadius(8)
+                            }
+                            .buttonStyle(.plain)
+                            .disabled(viewModel.isSettingUp)
                         }
-                        .buttonStyle(.plain)
-                        .disabled(!viewModel.dependenciesReady)
                     }
                 }
                 
@@ -438,7 +473,15 @@ struct ContentView: View {
                 dismissButton: .default(Text(Localized.string("ok", lang: viewModel.language)))
             )
         }
-        .sheet(isPresented: Binding(get: { !viewModel.disclaimerAccepted }, set: { _ in })) {
+        .sheet(isPresented: Binding(
+            get: { !viewModel.disclaimerAccepted || showAboutDisclaimer },
+            set: { newValue in
+                if !newValue {
+                    viewModel.disclaimerAccepted = true
+                    showAboutDisclaimer = false
+                }
+            }
+        )) {
             VStack(spacing: 24) {
                 Image(systemName: "exclamationmark.shield.fill")
                     .font(.system(size: 60))
@@ -459,6 +502,7 @@ struct ContentView: View {
                 
                 Button(action: {
                     viewModel.disclaimerAccepted = true
+                    showAboutDisclaimer = false
                 }) {
                     Text(Localized.string("disclaimer_accept", lang: viewModel.language))
                         .font(.headline)
