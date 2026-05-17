@@ -105,7 +105,7 @@ We welcome contributions from developers of all skill levels\! Your ideas, bug f
 
 ```bash
 # Fork and clone
-git clone https://github.com/jadhavsharad/Youtube-Downloader.git
+git clone https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO.git
 
 # Install dependencies
 # Note: These are only needed for development, not for end-users.  
@@ -120,7 +120,7 @@ git checkout -b my-amazing-feature
 
 ## **📬 Support & Feedback**
 
-If you encounter any problems or have questions, please [**open a GitHub Issue**](https://github.com/jadhavsharad/Youtube-Downloader/issues).
+If you encounter any problems or have questions, please [**open a GitHub Issue**](https://github.com/hometrix/Youtube-Downloader-JMGREP-PRO/issues).
 
 ⭐ **If you find this app useful, please star the repository to show your support\!**
 
