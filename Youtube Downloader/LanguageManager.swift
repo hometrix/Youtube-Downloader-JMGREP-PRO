@@ -63,7 +63,12 @@ struct Localized {
                 "about_legal": "About / Legal",
                 "update_engine": "Update Engine",
                 "updating": "Updating yt-dlp...",
-                "update_success": "Engine updated successfully."
+                "update_success": "Engine updated successfully.",
+                "history": "History",
+                "history_title": "Download History",
+                "no_history": "No recent downloads.",
+                "show_in_finder": "Show in Finder",
+                "clear_history": "Clear History"
             ],
             .spanish: [
                 "app_title": "Descargador de Youtube",
@@ -118,7 +123,12 @@ struct Localized {
                 "about_legal": "Acerca de / Legal",
                 "update_engine": "Actualizar Motor",
                 "updating": "Actualizando yt-dlp...",
-                "update_success": "Motor actualizado con éxito."
+                "update_success": "Motor actualizado con éxito.",
+                "history": "Historial",
+                "history_title": "Historial de Descargas",
+                "no_history": "No hay descargas recientes.",
+                "show_in_finder": "Mostrar en Finder",
+                "clear_history": "Borrar Historial"
             ]
         ]
         return translations[lang]?[key] ?? key

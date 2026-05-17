@@ -77,6 +77,16 @@ class DownloadViewModel: ObservableObject {
     @Published var currentItemProgress: Double = 0.0
     @Published var currentItemSpeed: String = ""
     @Published var currentItemETA: String = ""
+    @Published var currentFilename: String = ""
+    
+    // MARK: - History
+    struct DownloadRecord: Identifiable, Codable {
+        var id = UUID()
+        let filename: String
+        let url: String
+        let date: Date
+    }
+    @Published var downloadHistory: [DownloadRecord] = []
     @Published var currentItemIndex = 0
     @Published var totalItems = 0
     
@@ -88,6 +98,7 @@ class DownloadViewModel: ObservableObject {
     private var activeProcess: Process?
     private let maxLogLines = 1000
     private let progressRegex = try! NSRegularExpression(pattern: #"\[download\]\s+([0-9.]+)%(?:\s+of\s+\S+)?(?:\s+at\s+([^\s]+))?(?:\s+ETA\s+([^\s]+))?"#)
+    private let destinationRegex = try! NSRegularExpression(pattern: #"(?:\[download\] Destination: |\[Merger\] Merging formats into ")([^"]+)"?"#)
     
     private var ytDlpPath: String?
     private var ffmpegPath: String?
@@ -105,6 +116,8 @@ class DownloadViewModel: ObservableObject {
                 print("Notification permission granted.")
             }
         }
+        
+        loadHistory()
     }
     
     // MARK: - Dependency Management
@@ -351,10 +364,17 @@ class DownloadViewModel: ObservableObject {
                     pipe.fileHandleForReading.readabilityHandler = nil
                     if p.terminationStatus != 0 && self.isRunning {
                         self.addLog(String(format: Localized.string("download_error", lang: self.language), "Status \(p.terminationStatus)"))
+                    } else if p.terminationStatus == 0 {
+                        // Success - append to history
+                        let record = DownloadRecord(filename: self.currentFilename.isEmpty ? url : self.currentFilename, url: url, date: Date())
+                        self.downloadHistory.insert(record, at: 0) // Most recent first
+                        self.saveHistory()
                     }
                     continuation.resume()
                 }
             }
+            
+            DispatchQueue.main.async { self.currentFilename = "" }
             
             do {
                 try process.run()
@@ -370,6 +390,12 @@ class DownloadViewModel: ObservableObject {
     private func processOutputLine(_ output: String) {
         output.enumerateLines { line, _ in
             self.addLog(line)
+            
+            if let match = self.destinationRegex.firstMatch(in: line, range: NSRange(line.startIndex..., in: line)) {
+                if let r = Range(match.range(at: 1), in: line) {
+                    self.currentFilename = String(line[r])
+                }
+            }
             
             if let match = self.progressRegex.firstMatch(in: line, range: NSRange(line.startIndex..., in: line)) {
                 // Progress
@@ -409,5 +435,25 @@ class DownloadViewModel: ObservableObject {
         currentItemETA = ""
         currentItemIndex = 0
         totalItems = 0
+    }
+    
+    // MARK: - History Methods
+    
+    private func loadHistory() {
+        if let data = UserDefaults.standard.data(forKey: "downloadHistory"),
+           let decoded = try? JSONDecoder().decode([DownloadRecord].self, from: data) {
+            self.downloadHistory = decoded
+        }
+    }
+    
+    private func saveHistory() {
+        if let encoded = try? JSONEncoder().encode(downloadHistory) {
+            UserDefaults.standard.set(encoded, forKey: "downloadHistory")
+        }
+    }
+    
+    func clearHistory() {
+        downloadHistory.removeAll()
+        saveHistory()
     }
 }

@@ -6,6 +6,7 @@ import AppKit
 struct AppHeaderView: View {
     @ObservedObject var viewModel: DownloadViewModel
     @Binding var showDisclaimer: Bool
+    @Binding var showHistory: Bool
     
     var body: some View {
         HStack(alignment: .top) {
@@ -35,6 +36,19 @@ struct AppHeaderView: View {
                 .frame(width: 100)
                 
                 HStack(spacing: 12) {
+                    Button(action: {
+                        showHistory = true
+                    }) {
+                        Image(systemName: "clock.fill")
+                        Text(Localized.string("history", lang: viewModel.language))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 12)
+                    .background(Color.secondary.opacity(0.2))
+                    .cornerRadius(100)
+                    .font(.caption)
+                    
                     Button(action: {
                         showDisclaimer = true
                     }) {
@@ -188,13 +202,14 @@ struct DownloadLocationView: View {
 struct ContentView: View {
     @StateObject private var viewModel = DownloadViewModel()
     @State private var showAboutDisclaimer = false
+    @State private var showHistory = false
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
                 // Header of the app
-                AppHeaderView(viewModel: viewModel, showDisclaimer: $showAboutDisclaimer)
+                AppHeaderView(viewModel: viewModel, showDisclaimer: $showAboutDisclaimer, showHistory: $showHistory)
                 
                 // Mode selection for single vs. batch URL
                 ModeSelectionView(viewModel: viewModel)
@@ -519,6 +534,93 @@ struct ContentView: View {
             .frame(width: 450, height: 500)
             .background(VisualEffectView(material: .hudWindow, blendingMode: .withinWindow))
         }
+        .sheet(isPresented: $showHistory) {
+            HistoryView(viewModel: viewModel, isPresented: $showHistory)
+        }
+    }
+}
+
+struct HistoryView: View {
+    @ObservedObject var viewModel: DownloadViewModel
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text(Localized.string("history_title", lang: viewModel.language))
+                    .font(.title2.bold())
+                Spacer()
+                Button(action: {
+                    isPresented = false
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundStyle(.gray)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.bottom, 8)
+            
+            if viewModel.downloadHistory.isEmpty {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(Localized.string("no_history", lang: viewModel.language))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                Spacer()
+            } else {
+                List {
+                    ForEach(viewModel.downloadHistory) { record in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(record.filename)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                    .truncationMode(.middle)
+                                Text(record.date, style: .date)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Button(action: {
+                                let path = "\(viewModel.downloadDirectory?.path ?? "")/\(record.filename)"
+                                let url = URL(fileURLWithPath: path)
+                                NSWorkspace.shared.activateFileViewerSelecting([url])
+                            }) {
+                                Image(systemName: "magnifyingglass.circle.fill")
+                                    .font(.title2)
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                            .buttonStyle(.plain)
+                            .help(Localized.string("show_in_finder", lang: viewModel.language))
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+                .listStyle(.inset)
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(8)
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        viewModel.clearHistory()
+                    }) {
+                        Text(Localized.string("clear_history", lang: viewModel.language))
+                            .foregroundStyle(.red)
+                            .padding(.vertical, 6)
+                            .padding(.horizontal, 12)
+                            .background(Color.red.opacity(0.1))
+                            .cornerRadius(8)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(24)
+        .frame(width: 500, height: 400)
     }
 }
 
